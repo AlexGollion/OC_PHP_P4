@@ -12,7 +12,9 @@
 <?php 
 
     require_once(__DIR__ . '/header.php');
-    require_once(__DIR__ . '/oeuvres.php');
+    require_once(__DIR__ . '/bdd.php');
+
+    $mysqlClient = connexion();
 
     $getData = $_GET['id'];
 
@@ -24,11 +26,18 @@
     }
  
     // Vérification que l'id est valide (supérieur à 0 et inférieur au nombre d'oeuvres) 
-    if ($getData < 0 || $getData > count($oeuvres))
+    /*if ($getData < 0 || $getData > count($oeuvres))
     {
         echo "id non valide";
         return;
-    }
+    }*/
+
+    $sqlQuery = 'SELECT * FROM oeuvre WHERE id = :id';
+    $oeuvresStatement = $mysqlClient->prepare($sqlQuery);
+    $oeuvresStatement->execute([
+        'id' => $getData,
+    ]);
+    $oeuvres = $oeuvresStatement->fetchAll();
 
     $i = 0;
     $find = false;
@@ -50,11 +59,11 @@
     <main>
         <article id="detail-oeuvre">
             <div id="img-oeuvre">
-                <img src=<?php echo $oeuvre['image'] ?> alt=<?php echo $oeuvre['titre'] ?>>
+                <img src=<?php echo $oeuvre['image'] ?> alt=<?php echo $oeuvre['nom'] ?>>
             </div>
             <div id="contenu-oeuvre">
-                <h1><?php echo $oeuvre['titre'] ?></h1>
-                <p class="description"><?php echo $oeuvre['artiste'] ?></p>
+                <h1><?php echo $oeuvre['nom'] ?></h1>
+                <p class="description"><?php echo $oeuvre['auteur'] ?></p>
                 <p class="description-complete">
                     <?php echo $oeuvre['description'] ?>
                 </p>

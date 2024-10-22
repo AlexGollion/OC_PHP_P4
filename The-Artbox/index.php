@@ -12,7 +12,13 @@
 
     <?php require_once(__DIR__ . '/header.php') ?>
 
-    <?php require_once(__DIR__ . '/oeuvres.php') ?>
+    <?php 
+        require_once(__DIR__ . '/bdd.php');
+        $mysqlClient = connexion();
+        $oeuvresStatement = $mysqlClient->prepare('SELECT * FROM oeuvre');
+        $oeuvresStatement->execute();
+        $oeuvres = $oeuvresStatement->fetchAll();
+    ?>
 
     <main>
         <div id="liste-oeuvres">
@@ -21,9 +27,9 @@
 
                 <article class="oeuvre">
                     <a href="oeuvre.php?id=<?php echo $oeuvre['id'] ?>">
-                        <img src=<?php echo $oeuvre['image'] ?> alt=<?php echo $oeuvre['titre'] ?>>
-                        <h2><?php echo $oeuvre['titre'] ?></h2>
-                        <p class="description"><?php echo $oeuvre['artiste'] ?></p>
+                        <img src=<?php echo $oeuvre['image'] ?> alt=<?php echo $oeuvre['nom'] ?>>
+                        <h2><?php echo $oeuvre['nom'] ?></h2>
+                        <p class="description"><?php echo $oeuvre['auteur'] ?></p>
                     </a>
                 </article>
 

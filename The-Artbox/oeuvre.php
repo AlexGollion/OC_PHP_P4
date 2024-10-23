@@ -16,43 +16,29 @@
 
     $mysqlClient = connexion();
 
-    $getData = $_GET['id'];
+    $getData = $_GET;
 
     // Vérification de la présence d'un id dans $_GET
-    if (!isset($getData) || empty($getData))
+    if (!isset($getData) || empty($getData['id']))
     {
-        echo "Il faut l'id de l'oeuvre";
-        return;
+        header('Location:'.'/P4/The-Artbox');
+        die();
     }
- 
-    // Vérification que l'id est valide (supérieur à 0 et inférieur au nombre d'oeuvres) 
-    /*if ($getData < 0 || $getData > count($oeuvres))
-    {
-        echo "id non valide";
-        return;
-    }*/
 
-    $sqlQuery = 'SELECT * FROM oeuvre WHERE id = :id';
-    $oeuvresStatement = $mysqlClient->prepare($sqlQuery);
-    $oeuvresStatement->execute([
-        'id' => $getData,
+    $sqlQuery = 'SELECT * FROM oeuvres WHERE id = :id';
+    $oeuvreStatement = $mysqlClient->prepare($sqlQuery);
+    $oeuvreStatement->execute([
+        'id' => $getData['id'],
     ]);
-    $oeuvres = $oeuvresStatement->fetchAll();
-
-    $i = 0;
-    $find = false;
-    $oeuvre;
-
-    // Recherche de l'oeuvre
-    while ($i < count($oeuvres) && !$find)
+    $oeuvreTemp = $oeuvreStatement->fetchAll();
+    if($oeuvreTemp)
     {
-        $oeuvre_temp = $oeuvres[$i];
-        if ($oeuvre_temp['id'] == $getData)
-        {
-            $oeuvre = $oeuvre_temp;
-            $find = true;
-        }
-        $i++;
+        $oeuvre = $oeuvreTemp[0];
+    }
+    else 
+    {
+        header('Location:'.'/P4/The-Artbox');
+        die();  
     }
 
 ?>

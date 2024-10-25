@@ -15,19 +15,19 @@
     <form action="traitement.php" method="POST">
         <div class="champ-formulaire">
             <label>Nom de l'oeuvre</label>
-            <input type="text" name="titre" id="titre"></input>
+            <input type="text" name="titre" required id="titre"></input>
         </div>
         <div class="champ-formulaire">
             <label>Nom de l'auteur</label>
-            <input type="text" name="auteur" id="auteur"></input>
+            <input type="text" name="auteur" required id="auteur"></input>
         </div>
         <div class="champ-formulaire">
             <label>URL de l'oeuvre</label>
-            <input type="url" name="photo" id="photo"></input>
+            <input type="url" name="photo" required id="photo"></input>
         </div>
         <div class="champ-formulaire">
             <label>Description de l'oeuvre</label>
-            <textarea name="description" id="description"></textarea>
+            <textarea name="description" required id="description"></textarea>
         </div>
 
         <input type="submit" value="Valider" name="submit"></input>

@@ -1,3 +1,15 @@
+<?php
+    require_once(__DIR__ . '/header.php');
+    require_once(__DIR__ . '/utils.php');
+
+    require_once(__DIR__ . '/bdd.php');
+    $mysqlClient = connexion();
+    $oeuvresStatement = $mysqlClient->prepare('SELECT * FROM oeuvres');
+    $oeuvresStatement->execute();
+    $oeuvres = $oeuvresStatement->fetchAll();
+?>
+
+
 <!doctype html>
 <html lang="fr">
 <head>
@@ -9,16 +21,6 @@
     <title>The ArtBox</title>
 </head>
 <body>
-
-    <?php require_once(__DIR__ . '/header.php') ?>
-
-    <?php 
-        require_once(__DIR__ . '/bdd.php');
-        $mysqlClient = connexion();
-        $oeuvresStatement = $mysqlClient->prepare('SELECT * FROM oeuvre');
-        $oeuvresStatement->execute();
-        $oeuvres = $oeuvresStatement->fetchAll();
-    ?>
 
     <main>
         <div id="liste-oeuvres">

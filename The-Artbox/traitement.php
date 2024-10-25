@@ -1,11 +1,12 @@
 <?php 
+    require_once(__DIR__ . '/utils.php');
+    
     $postData = $_POST;
 
     if(empty($postData['titre']) || empty($postData['auteur']) || empty($postData['photo']) || empty($postData['description']) 
         || strlen($postData['description']) < 3 || !filter_var($postData['photo'], FILTER_VALIDATE_URL))
     {
-        header('Location:'.'/P4/The-Artbox/');
-        die();
+        redirect();
     } else {
         $titre = htmlspecialchars($postData['titre']);
         $auteur = htmlspecialchars($postData['auteur']);
@@ -25,6 +26,6 @@
             'description' => $description,
         ]);
 
-        header('Location:/P4/The-Artbox/oeuvre.php?id=' . $mysqlClient->lastInsertId());
+        header('Location:'.URL.'/oeuvre.php?id=' . $mysqlClient->lastInsertId());
     }
 ?>

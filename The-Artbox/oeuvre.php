@@ -1,17 +1,6 @@
-<!doctype html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="css/style.css">
-    <title>The ArtBox</title>
-</head>
-
-<?php 
-
+<?php
     require_once(__DIR__ . '/header.php');
+    require_once(__DIR__ . '/utils.php');
     require_once(__DIR__ . '/bdd.php');
 
     $mysqlClient = connexion();
@@ -21,8 +10,7 @@
     // Vérification de la présence d'un id dans $_GET
     if (!isset($getData) || empty($getData['id']))
     {
-        header('Location:'.'/P4/The-Artbox');
-        die();
+        redirect();
     }
 
     $sqlQuery = 'SELECT * FROM oeuvres WHERE id = :id';
@@ -37,11 +25,22 @@
     }
     else 
     {
-        header('Location:'.'/P4/The-Artbox');
-        die();  
+        redirect();
     }
 
 ?>
+
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/style.css">
+    <title>The ArtBox</title>
+</head>
+
     <main>
         <article id="detail-oeuvre">
             <div id="img-oeuvre">
